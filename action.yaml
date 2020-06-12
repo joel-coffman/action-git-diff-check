@@ -1,0 +1,13 @@
+name: 'git diff --check'
+description: |
+  Warn if changes introduce conflict markers or whitespace errors
+inputs:
+  revision:
+    description: 'SHA hash of change'
+    required: true
+    default: 'HEAD^'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.revision }}
