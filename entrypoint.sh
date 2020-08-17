@@ -10,6 +10,11 @@ fi
 
 repository=$(mktemp)
 if git rev-parse --git-dir 2> "$repository"; then
+  if ! git rev-parse --quiet --verify "$base" > /dev/null; then
+    # invalid base revision -- use the "empty tree" instead
+    base="$(echo -n | git hash-object -t tree --stdin)"
+  fi
+
   set -x
   git rev-parse "$base"
   git rev-parse "HEAD"
